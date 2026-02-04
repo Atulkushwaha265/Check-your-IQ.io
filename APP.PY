@@ -1,21 +1,18 @@
+from flask import Flask
 import os
 
-# ===== BASE PATH (change for phone / PC) =====
-base_path = "/storage/emulated/0/MyFolders"
-# PC ke liye use karo:
-# base_path = "C:/Users/Public/Documents/MyFolders"
+app = Flask(__name__)
 
-# ===== NUMBER OF FOLDERS =====
-total_folders = 100
+@app.route("/")
+def create_folders():
+    base_path = "/storage/emulated/0/MyFolders"
 
-# ===== CREATE BASE FOLDER =====
-os.makedirs(base_path, exist_ok=True)
+    os.makedirs(base_path, exist_ok=True)
 
-# ===== CREATE MULTIPLE FOLDERS =====
-for i in range(1, total_folders + 1):
-    folder_name = f"Project{i}"
-    folder_path = os.path.join(base_path, folder_name)
-    os.makedirs(folder_path, exist_ok=True)
-    print(f"Created: {folder_path}")
+    for i in range(1, 1000):
+        os.makedirs(os.path.join(base_path, f"Project{i}"), exist_ok=True)
 
-print("All folders created successfully 👍")
+    return "Folders created successfully 👍"
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=10000)
